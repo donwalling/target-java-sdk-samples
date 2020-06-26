@@ -27,17 +27,19 @@ public class ClientSampleApplicationTests {
     }
     @Test
     public void superSimple() {
-        ClientConfig config = ClientConfig.builder().client("emeaprod4")
-                .organizationId("0DD934B85278256B0A490D44@AdobeOrg")
+        ClientConfig config = ClientConfig.builder().client("targetsummitlab")
+                .organizationId("2EF35E3F58BD799C0A495C19@AdobeOrg")
                 .build();
         TargetClient targetClient = TargetClient.create(config);
-        MboxRequest mbox = new MboxRequest().name("server-side-mbox").index(0);
+        MboxRequest mbox = new MboxRequest().name("target-global-mbox").index(0);
+        System.out.print("Mbox+"+mbox);
         TargetDeliveryRequest request = TargetDeliveryRequest.builder()
                 .context(new Context().channel(ChannelType.WEB))
                 .execute(new ExecuteRequest().mboxes(Arrays.asList(mbox)))
                 .build();
 
         TargetDeliveryResponse offers = targetClient.getOffers(request);
+        System.out.println("offers"+ offers);
 
         if (offers.getStatus() == 200) {
             DeliveryResponse response = offers.getResponse();
